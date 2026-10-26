@@ -11,6 +11,7 @@ import { WhyUs } from "@/app/components/sections/WhyUs";
 import { Clients } from "@/app/components/sections/Clients";
 import { CallToAction } from "@/app/components/sections/CallToAction";
 import { Footer } from "@/app/components/sections/Footer";
+import { ChatLauncher } from "@/app/components/chatbot/ChatLauncher";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -64,6 +65,7 @@ export default function Home() {
         <CallToAction />
       </main>
       <Footer />
+      <ChatLauncher />
     </>
   );
 }
