@@ -24,17 +24,29 @@ export function Footer() {
             <p className="mt-1 text-sm text-orange-400">{company.tagline}</p>
             <p className="mt-4 max-w-sm text-sm leading-relaxed">{company.description}</p>
             <ul className="mt-6 flex gap-3" aria-label="Media sosial">
-              {socials.filter((social) => social.url).map((social) => (
+              {socials.map((social) => (
                 <li key={social.platform}>
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${company.shortName} di ${social.label}`}
-                    className="flex size-11 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:bg-orange-500 hover:text-navy-950 hover:ring-orange-500"
-                  >
-                    <SocialIcon platform={social.platform} />
-                  </a>
+                  {social.url ? (
+                    <a
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${company.shortName} di ${social.label}`}
+                      className="flex size-11 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:bg-orange-500 hover:text-navy-950 hover:ring-orange-500"
+                    >
+                      <SocialIcon platform={social.platform} />
+                    </a>
+                  ) : (
+                    // No account yet: same look, but not a link, so clicking does nothing.
+                    <span
+                      role="img"
+                      aria-label={`${company.shortName} di ${social.label} (segera hadir)`}
+                      title={`${social.label} segera hadir`}
+                      className="flex size-11 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15"
+                    >
+                      <SocialIcon platform={social.platform} />
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

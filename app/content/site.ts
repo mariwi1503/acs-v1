@@ -34,12 +34,15 @@ export const company = {
   logoLight: { src: "/brand/acs-logo-light.png", width: 333, height: 113 },
 } as const;
 
-// Empty URLs are hidden in the footer and skipped in the JSON-LD `sameAs`.
-// TikTok and Facebook accounts don't exist yet — add them here once they do.
+// Every platform is shown in the footer; an empty URL renders a non-clickable icon
+// and is skipped in the JSON-LD `sameAs`.
 export const socials: { platform: SocialPlatform; label: string; url: string }[] = [
   { platform: "instagram", label: "Instagram", url: "https://www.instagram.com/alphacoresolution.it/" },
+  // TikTok and Facebook accounts don't exist yet — fill in the URL once they do.
+  { platform: "tiktok", label: "TikTok", url: "" },
   // TODO: confirm with client — LinkedIn profile URL.
   { platform: "linkedin", label: "LinkedIn", url: "" },
+  { platform: "facebook", label: "Facebook", url: "" },
 ];
 
 export const whatsappDefaultMessage =
