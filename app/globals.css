@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/*
+ * Brand tokens sampled from the ACS logo:
+ * navy #03224E · gray #606060 · orange #FD5C0C.
+ * White text on brand orange is only 3:1, so orange buttons use navy text
+ * and small orange text on light backgrounds uses --color-orange-700.
+ */
+@theme {
+  --color-navy-950: #010d22;
+  --color-navy-900: #03224e;
+  --color-navy-800: #0a2f63;
+  --color-navy-700: #163f7c;
+  --color-navy-200: #c3cfe2;
+  --color-navy-100: #e3e9f3;
+
+  --color-orange-400: #ff7d3b;
+  --color-orange-500: #fd5c0c;
+  --color-orange-700: #c2410c;
+  --color-orange-50: #fff3ec;
+
+  --color-steel-600: #606060;
+  --color-steel-500: #5b6472;
+  --color-steel-300: #c9cfd8;
+
+  --color-mist-50: #f7f8fa;
+  --color-mist-100: #f1f3f7;
+  --color-mist-200: #e4e8ee;
+
+  --color-ink: #0b1b33;
+
+  --font-sans: var(--font-sora);
+  --font-mono: var(--font-jetbrains);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 7s ease-in-out 1.5s infinite;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  background: var(--color-mist-50);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-orange-500);
+  color: var(--color-navy-950);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-orange-500);
+  outline-offset: 3px;
+}
+
+/* Subtle technical grid used on dark sections. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/*
+ * Pointer effects. Variables are written by <PointerEffects />, only for a fine
+ * pointer with motion allowed; without them everything rests at its default.
+ * `translate` is used instead of `transform` so these compose with the float,
+ * reveal and hover animations that already own `transform`.
+ */
+[data-depth] {
+  translate: calc(var(--parallax-x, 0) * var(--depth) * 1px) calc(var(--parallax-y, 0) * var(--depth) * 1px);
+  transition: translate 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-magnetic] {
+  translate: var(--magnet-x, 0) var(--magnet-y, 0);
+}
+
+/* Brighter grid revealed in a circle around the pointer (hero backdrop). */
+.grid-spotlight {
+  background-image:
+    linear-gradient(to right, rgb(253 92 12 / 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(253 92 12 / 0.35) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(
+    16rem circle at var(--spot-x, -100vmax) var(--spot-y, -100vmax),
+    black,
+    transparent 70%
+  );
+}
+
+/* Soft orange light that follows the pointer inside navy cards. */
+.card-spotlight {
+  background: radial-gradient(
+    22rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgb(253 92 12 / 0.24),
+    transparent 70%
+  );
+}
+
+/* Scroll reveal: CSS-only progressive enhancement, no JS required. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
